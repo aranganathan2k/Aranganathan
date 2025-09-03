@@ -1,50 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    .calculator {
-      display: inline-block;
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    input {
-      width: 100%;
-      height: 40px;
-      text-align: right;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-    button {
-      width: 45px;
-      height: 45px;
-      margin: 5px;
-      font-size: 18px;
-    }
-  </style>
-</head>
-<body>
-  <h1>My Calculator</h1>
-  <div class="calculator">
-    <input type="text" id="display" disabled>
-    <br>
-    <button onclick="appendValue('1')">1</button>
-    <button onclick="appendValue('2')">2</button>
-    <button onclick="appendValue('3')">3</button>
-    <button onclick="calculate()">=</button>
-  </div>
+let display = document.getElementById("display");
 
-  <script src="script.js"></script>
-</body>
-</html>
+// Append numbers/operators to the display
+function appendValue(value) {
+    display.value += value;
+}
+
+// Clear the display
+function clearDisplay() {
+    display.value = "";
+}
+
+// Delete the last character
+function deleteLast() {
+    display.value = display.value.slice(0, -1);
+}
+
+// Calculate the result
+function calculateResult() {
+    try {
+        display.value = eval(display.value); // evaluates the expression
+    } catch (e) {
+        display.value = "Error"; // in case of invalid input
+    }
+}
 
 
 

@@ -1,17 +1,8 @@
-let display = document.getElementById("display");
-
 function appendValue(val) {
-  display.value += val;
-}
-
-function clearDisplay() {
-  display.value = "";
+  document.getElementById("display").value += val;
 }
 
 function calculate() {
-  try {
-    display.value = eval(display.value);
-  } catch {
-    display.value = "Error";
-  }
+  let result = eval(document.getElementById("display").value);
+  document.getElementById("display").value = result;
 }

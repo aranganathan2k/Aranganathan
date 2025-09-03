@@ -1,309 +1,39 @@
-<!doctype html> <html> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width,initial-scale=1" /> <title>Calculator</title> </head> <body> <h1>Hello, calculator!</h1> </body> </html>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculator</title>
-  <style>
-    :root {
-      --bg: #0e0f12;
-      --panel: #1b1f2a;
-      --text: #f7f8fa;
-      --muted: #a9b0bf;
-      --radius: 16px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: radial-gradient(1200px 800px at 80% -10%, #1a2040, #0b0c12 60%, #08090d);
-      color: var(--text);
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-    .calculator {
-      width: min(420px, 100%);
-      background: color-mix(in srgb, var(--panel), transparent 20%);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.06);
-      box-shadow: 0 30px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.04);
-      backdrop-filter: blur(8px);
-    }
-    .display {
-      padding: 24px;
-      text-align: right;
-    }
-    .prev {
-      min-height: 24px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      letter-spacing: .5px;
-    }
-    .curr {
-      margin-top: 6px;
-      font-size: clamp(2rem, 8vw, 3.2rem);
-      font-weight: 700;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      padding: 16px;
-    }
-    button {
-      appearance: none;
-      border: none;
-      border-radius: 14px;
-      padding: 18px;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow: 0 6px 14px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
-      cursor: pointer;
-      transition: transform .05s ease, filter .2s ease, background .2s ease;
-    }
-    button:active { transform: translateY(1px) scale(0.995); }
-    button:hover { filter: brightness(1.05); }
-    button.operator { background: linear-gradient(180deg, #3e57ff, #2a3ce8); }
-    button.equal { background: linear-gradient(180deg, #00B686, #00956c); }
-    button.secondary { background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--muted); }
-    button.wide { grid-column: span 2; }
-    button.danger { background: linear-gradient(180deg, #ff6b6b, #e63737); }
-    .footer {
-      padding: 0 16px 16px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .85rem;
-    }
-    .kbd {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      background: rgba(255,255,255,.08);
-      border-radius: 6px;
-      padding: 2px 6px;
-    }
-    @media (max-width: 380px) {
-      button { padding: 16px; font-size: 1.1rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="calculator" role="application" aria-label="Calculator">
-    <div class="display" aria-live="polite">
-      <div class="prev" id="prev"></div>
-      <div class="curr" id="curr">0</div>
-    </div>
-    <div class="grid">
-      <button class="secondary danger" data-action="clear">AC</button>
-      <button class="secondary" data-action="delete">DEL</button>
-      <button class="secondary" data-action="percent">%</button>
-      <button class="operator" data-operator="÷">÷</button>
-
-      <button data-digit="7">7</button>
-      <button data-digit="8">8</button>
-      <button data-digit="9">9</button>
-      <button class="operator" data-operator="×">×</button>
-
-      <button data-digit="4">4</button>
-      <button data-digit="5">5</button>
-      <button data-digit="6">6</button>
-      <button class="operator" data-operator="−">−</button>
-
-      <button data-digit="1">1</button>
-      <button data-digit="2">2</button>
-      <button data-digit="3">3</button>
-      <button class="operator" data-operator="+">+</button>
-
-      <button class="secondary" data-action="sign">+/-</button>
-      <button data-digit="0" class="wide">0</button>
-      <button data-dot="." aria-label="decimal point">.</button>
-      <button class="equal" data-action="equals">=</button>
-    </div>
-    <div class="footer">
-      Tip: type with your keyboard (<span class="kbd">/ * - + . Enter Backspace</span>)
+  <h1>My Calculator</h1>
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('+')">+</button>
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendValue('-')">-</button>
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendValue('*')">*</button>
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="appendValue('/')">/</button>
     </div>
   </div>
 
-  <script>
-    (function () {
-      const prevEl = document.getElementById('prev');
-      const currEl = document.getElementById('curr');
-
-      let previous = '';
-      let current = '0';
-      let operator = null;
-      let overwrite = true;
-
-      function format(numStr) {
-        if (numStr === 'Error' || numStr === 'Cannot divide by 0') return numStr;
-        if (!numStr || numStr === '-') return numStr || '0';
-        let [intPart, decPart] = numStr.split('.');
-        const sign = intPart.startsWith('-') ? '-' : '';
-        intPart = intPart.replace('-', '');
-        intPart = Number(intPart || '0').toLocaleString(undefined, { maximumFractionDigits: 0 });
-        return sign + (decPart ? intPart + '.' + decPart : intPart);
-      }
-
-      function setCurrent(value) {
-        current = value;
-        currEl.textContent = format(current);
-      }
-
-      function setPrev(text) {
-        prevEl.textContent = text || '';
-      }
-
-      function clearAll() {
-        previous = '';
-        current = '0';
-        operator = null;
-        overwrite = true;
-        setPrev('');
-        setCurrent('0');
-      }
-
-      function deleteDigit() {
-        if (overwrite) return;
-        if (current.length <= 1 || (current.length === 2 && current.startsWith('-'))) {
-          setCurrent('0');
-          overwrite = true;
-        } else {
-          setCurrent(current.slice(0, -1));
-        }
-      }
-
-      function appendDigit(d) {
-        if (overwrite) {
-          setCurrent(d === '0' ? '0' : d);
-          overwrite = false;
-          return;
-        }
-        if (current.length >= 18) return;
-        setCurrent(current === '0' ? d : current + d);
-      }
-
-      function appendDot() {
-        if (overwrite) {
-          setCurrent('0.');
-          overwrite = false;
-          return;
-        }
-        if (current.includes('.')) return;
-        setCurrent(current + '.');
-      }
-
-      function toggleSign() {
-        if (current === '0') return;
-        setCurrent(current.startsWith('-') ? current.slice(1) : '-' + current);
-        overwrite = false;
-      }
-
-      function toNumber(s) { return parseFloat(s); }
-
-      function roundSmart(n) {
-        const str = Number(n).toPrecision(12);
-        return parseFloat(str).toString();
-      }
-
-      function percent() {
-        const n = toNumber(current);
-        if (isNaN(n)) return;
-        setCurrent(roundSmart(n / 100));
-        overwrite = true;
-      }
-
-      function chooseOperator(op) {
-        if (operator && !overwrite) compute();
-        operator = op;
-        previous = current;
-        setPrev(format(previous) + ' ' + operator);
-        overwrite = true;
-      }
-
-      function compute() {
-        if (!operator || previous === '' || overwrite) return;
-        const a = toNumber(previous);
-        const b = toNumber(current);
-        let result;
-        switch (operator) {
-          case '+': result = a + b; break;
-          case '−': result = a - b; break;
-          case '×': result = a * b; break;
-          case '÷':
-            if (b === 0) {
-              setPrev('');
-              setCurrent('Cannot divide by 0');
-              operator = null;
-              previous = '';
-              overwrite = true;
-              return;
-            }
-            result = a / b; 
-            break;
-          default: return;
-        }
-        result = roundSmart(result);
-        setPrev('');
-        setCurrent(result);
-        operator = null;
-        previous = '';
-        overwrite = true;
-      }
-
-      // Clicks
-      document.querySelector('.grid').addEventListener('click', (e) => {
-        const btn = e.target.closest('button');
-        if (!btn) return;
-        const digit = btn.getAttribute('data-digit');
-        const op = btn.getAttribute('data-operator');
-        const action = btn.getAttribute('data-action');
-        if (digit) appendDigit(digit);
-        else if (op) chooseOperator(op);
-        else if (btn.hasAttribute('data-dot')) appendDot();
-        else if (action === 'equals') compute();
-        else if (action === 'clear') clearAll();
-        else if (action === 'delete') deleteDigit();
-        else if (action === 'sign') toggleSign();
-        else if (action === 'percent') percent();
-      });
-
-      // Keyboard
-      window.addEventListener('keydown', (e) => {
-        if (e.ctrlKey || e.metaKey || e.altKey) return;
-        const key = e.key;
-        if (/\d/.test(key)) { appendDigit(key); return; }
-        if (key === '.' || key === ',') { appendDot(); e.preventDefault(); return; }
-        if (key === 'Backspace') { deleteDigit(); return; }
-        if (key === 'Delete' || key === 'Escape') { clearAll(); return; }
-        if (key === 'Enter' || key === '=') { compute(); e.preventDefault(); return; }
-        if (key === '+' || key === '-' || key === '*' || key === '/') {
-          const map = { '+': '+', '-': '−', '*': '×', '/': '÷' };
-          chooseOperator(map[key]);
-          e.preventDefault();
-          return;
-        }
-        if (key === '%') { percent(); e.preventDefault(); return; }
-      });
-
-      clearAll();
-    })();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
-<!doctype html>
-<html>
-  <head><meta charset="utf-8"><title>Aranganathan</title></head>
-  <body><h1>It works!</h1></body>
-</html>
-<script src="script.js"></script>
 
 
 

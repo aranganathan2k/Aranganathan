@@ -1,25 +1,25 @@
 let display = document.getElementById("display");
 
-// Append numbers/operators to the display
+// Append numbers/operators
 function appendValue(value) {
-    display.value += value;
+  display.value += value;
 }
 
 // Clear the display
 function clearDisplay() {
-    display.value = "";
+  display.value = "";
 }
 
-// Delete the last character
+// Delete last character
 function deleteLast() {
-    display.value = display.value.slice(0, -1);
+  display.value = display.value.slice(0, -1);
 }
 
 // Calculate the result
 function calculateResult() {
-    try {
-        display.value = eval(display.value); // evaluates the expression
-    } catch (e) {
-        display.value = "Error"; // in case of invalid input
-    }
+  try {
+    display.value = eval(display.value); 
+  } catch (e) {
+    display.value = "Error";
+  }
 }
